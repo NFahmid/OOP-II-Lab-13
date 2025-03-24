@@ -119,7 +119,7 @@ public class Flight extends FlightDistance {
      * @return formatted flight time
      */
     public String calculateFlightTime(double distanceBetweenTheCities) {
-        double groundSpeed = 450;
+        double groundSpeed = Constants.GROUND_SPEED_KNOTS;
         double time = (distanceBetweenTheCities / groundSpeed);
         String timeInString = String.format("%.4s", time);
         String[] timeArray = timeInString.replace('.', ':').split(":");

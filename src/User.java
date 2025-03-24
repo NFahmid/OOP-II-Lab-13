@@ -247,7 +247,7 @@ public class User {
                             String flightToBeBooked = read1.nextLine();
                             System.out.print("Enter the Number of tickets for " + flightToBeBooked + " flight :   ");
                             int numOfTickets = read.nextInt();
-                            while (numOfTickets > 10) {
+                            while (numOfTickets > Constants.MAX_TICKETS_PER_BOOKING) {
                                 System.out.print(
                                         "ERROR!! You can't book more than 10 tickets at a time for single flight....Enter number of tickets again : ");
                                 numOfTickets = read.nextInt();

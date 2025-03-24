@@ -30,10 +30,10 @@ public class RandomGenerator {
     /* Generates Random ID for the Customers....*/
     public void randomIDGen() {
         Random rand = new Random();
-        String randomID = Integer.toString(rand.nextInt(1000000));
+        String randomID = Integer.toString(rand.nextInt(Constants.MAX_RANDOM_ID));
 
-        while (Integer.parseInt(randomID) < 20000) {
-            randomID = Integer.toString(rand.nextInt(1000000));
+        while (Integer.parseInt(randomID) < Constants.MIN_RANDOM_ID) {
+            randomID = Integer.toString(rand.nextInt(Constants.MAX_RANDOM_ID));
         }
         setRandomNum(randomID);
     }
@@ -65,9 +65,9 @@ public class RandomGenerator {
     /*Generates the Random Number of Seats for each flight*/
     public int randomNumOfSeats() {
         Random random = new Random();
-        int numOfSeats = random.nextInt(500);
-        while (numOfSeats < 75) {
-            numOfSeats = random.nextInt(500);
+        int numOfSeats = random.nextInt(Constants.MAX_SEATS);
+        while (numOfSeats < Constants.MIN_SEATS) {
+            numOfSeats = random.nextInt(Constants.MAX_SEATS);
         }
         return numOfSeats;
     }

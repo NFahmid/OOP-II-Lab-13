@@ -4,7 +4,7 @@ public abstract class FlightDistance {
     public abstract String[] calculateDistance(double lat1, double lon1, double lat2, double lon2);
 
     public void displayMeasurementInstructions(){
-        String symbols = "+---------------------------+";
+        String symbols = Constants.HEADER_SEPARATOR;
         System.out.printf("\n\n %100s\n %100s", symbols, "| SOME IMPORTANT GUIDELINES |");
         System.out.printf("\n %100s\n", symbols);
         System.out.println("\n\t\t1. Distance between the destinations are based upon the Airports Coordinates(Latitudes && Longitudes) based in those cities\n");
