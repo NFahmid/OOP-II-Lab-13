@@ -66,7 +66,7 @@ public class FlightDisplay implements DisplayClass {
     @Override
     public void displayFlightsRegisteredByOneUser(String userID) {
         boolean found = false;
-        for (Customer customer : Customer.customerCollection) {
+        for (Customer customer : Customer.getCustomers()) {
             if (customer.getUserID().equals(userID)) {
                 found = true;
                 List<Flight> flights = customer.getFlightsRegisteredByUser();

@@ -33,14 +33,14 @@ public class FlightReservation {
         boolean isFound = false;
         for (Flight f1 : flight.getFlightList()) {
             if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
-                for (Customer customer : Customer.customerCollection) {
+                for (Customer customer : Customer.getCustomers()) {
                     if (userID.equals(customer.getUserID())) {
                         isFound = true;
                         f1.setNoOfSeatsInTheFlight(f1.getNoOfSeats() - numOfTickets);
                         if (!f1.isCustomerAlreadyAdded(f1.getListOfRegisteredCustomersInAFlight(), customer)) {
                             f1.addNewCustomerToFlight(customer);
                         }
-                        if (isFlightAlreadyAddedToCustomerList(customer.flightsRegisteredByUser, f1)) {
+                        if (isFlightAlreadyAddedToCustomerList(customer.getFlightsRegisteredByUser(), f1)) {
                             addNumberOfTicketsToAlreadyBookedFlight(customer, numOfTickets);
                             if (flightIndex(flight.getFlightList(), flight) != -1) {
                                 customer.addExistingFlightToCustomerList(flightIndex(flight.getFlightList(), flight), numOfTickets);
@@ -72,7 +72,7 @@ public class FlightReservation {
         Scanner read = new Scanner(System.in);
         int index = 0, ticketsToBeReturned;
         boolean isFound = false;
-        for (Customer customer : Customer.customerCollection) {
+        for (Customer customer : Customer.getCustomers()) {
             if (userID.equals(customer.getUserID())) {
                 if (customer.getFlightsRegisteredByUser().size() != 0) {
                     System.out.printf("%50s %s Here is the list of all the Flights registered by you %s", " ", "++++++++++++++", "++++++++++++++");
@@ -93,11 +93,11 @@ public class FlightReservation {
                             }
                             if (numOfTicketsForFlight == numOfTickets) {
                                 ticketsToBeReturned = flight.getNoOfSeats() + numOfTicketsForFlight;
-                                customer.numOfTicketsBookedByUser.remove(index);
+                                customer.getNumOfTicketsBookedByUser().remove(index);
                                 flightIterator.remove();
                             } else {
                                 ticketsToBeReturned = numOfTickets + flight.getNoOfSeats();
-                                customer.numOfTicketsBookedByUser.set(index, (numOfTicketsForFlight - numOfTickets));
+                                customer.getNumOfTicketsBookedByUser().set(index, (numOfTicketsForFlight - numOfTickets));
                             }
                             flight.setNoOfSeatsInTheFlight(ticketsToBeReturned);
                             break;
@@ -117,12 +117,12 @@ public class FlightReservation {
     }
 
     void addNumberOfTicketsToAlreadyBookedFlight(Customer customer, int numOfTickets) {
-        int newNumOfTickets = customer.numOfTicketsBookedByUser.get(flightIndexInFlightList) + numOfTickets;
-        customer.numOfTicketsBookedByUser.set(flightIndexInFlightList, newNumOfTickets);
+        int newNumOfTickets = customer.getNumOfTicketsBookedByUser().get(flightIndexInFlightList) + numOfTickets;
+        customer.getNumOfTicketsBookedByUser().set(flightIndexInFlightList, newNumOfTickets);
     }
 
     void addNumberOfTicketsForNewFlight(Customer customer, int numOfTickets) {
-        customer.numOfTicketsBookedByUser.add(numOfTickets);
+        customer.getNumOfTicketsBookedByUser().add(numOfTickets);
     }
 
     boolean isFlightAlreadyAddedToCustomerList(List<Flight> flightList, Flight flight) {
@@ -154,7 +154,7 @@ public class FlightReservation {
 
     /*toString() Method for displaying number of flights registered by single user...*/
     public String toString(int serialNum, Flight flights, Customer customer) {
-        return String.format("| %-5d| %-41s | %-9s | \t%-9d | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  | %-10s |", serialNum, flights.getFlightSchedule(), flights.getFlightNumber(), customer.numOfTicketsBookedByUser.get(serialNum - 1), flights.getFromWhichCity(), flights.getToWhichCity(), flights.fetchArrivalTime(), flights.getFlightTime(), flights.getGate(), flightStatus(flights));
+        return String.format("| %-5d| %-41s | %-9s | \t%-9d | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  | %-10s |", serialNum, flights.getFlightSchedule(), flights.getFlightNumber(), customer.getNumOfTicketsBookedByUser().get(serialNum - 1), flights.getFromWhichCity(), flights.getToWhichCity(), flights.fetchArrivalTime(), flights.getFlightTime(), flights.getGate(), flightStatus(flights));
     }
 
     public FlightReservation() {
@@ -169,7 +169,7 @@ public class FlightReservation {
 
     public String toString(int serialNum, Customer customer, int index) {
         return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |       %-7s  |", "", (serialNum + 1), customer.randomIDDisplay(customer.getUserID()), customer.getName(),
-                customer.getAge(), customer.getEmail(), customer.getAddress(), customer.getPhone(), customer.numOfTicketsBookedByUser.get(index));
+                customer.getAge(), customer.getEmail(), customer.getAddress(), customer.getPhone(), customer.getNumOfTicketsBookedByUser().get(index));
     }
 
     public void displayHeaderForUsers(Flight flight, List<Customer> c) {

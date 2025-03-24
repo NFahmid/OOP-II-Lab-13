@@ -11,9 +11,33 @@ public class Customer {
     private final String password;
     private String address;
     private int age;
-    public List<Flight> flightsRegisteredByUser;
-    public List<Integer> numOfTicketsBookedByUser;
-    public static final List<Customer> customerCollection = User.getCustomersCollection();
+    private List<Flight> flightsRegisteredByUser;
+    private List<Integer> numOfTicketsBookedByUser;
+    private static final List<Customer> customerCollection = User.getCustomersCollection();
+
+    /**
+     * Returns an unmodifiable view of the customer collection to prevent direct modifications
+     * @return List<Customer> unmodifiable list of customers
+     */
+    public static List<Customer> getCustomers() {
+        return Collections.unmodifiableList(customerCollection);
+    }
+
+    /**
+     * Adds a new customer to the collection
+     * @param customer the customer to add
+     */
+    static void addCustomer(Customer customer) {
+        customerCollection.add(customer);
+    }
+
+    /**
+     * Removes a customer from the collection
+     * @param customer the customer to remove
+     */
+    static void removeCustomer(Customer customer) {
+        customerCollection.remove(customer);
+    }
 
     // ************************************************************
     // Behaviours/Methods
@@ -267,6 +291,10 @@ public class Customer {
         return flightsRegisteredByUser;
     }
 
+    public void setFlightsRegisteredByUser(List<Flight> flights) {
+        this.flightsRegisteredByUser = flights;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -297,6 +325,14 @@ public class Customer {
 
     public List<Integer> getNumOfTicketsBookedByUser() {
         return numOfTicketsBookedByUser;
+    }
+
+    public void setNumOfTicketsBookedByUser(List<Integer> tickets) {
+        this.numOfTicketsBookedByUser = tickets;
+    }
+
+    public static List<Customer> getCustomerCollection() {
+        return customerCollection;
     }
 
     public void setName(String name) {

@@ -8,7 +8,7 @@ public class CustomerDisplay {
     public void displayCustomersData(boolean showHeader, Customer customer) {
         displayHeader();
         int i = 0;
-        for (Customer c : Customer.customerCollection) {
+        for (Customer c : Customer.getCustomers()) {
             i++;
             System.out.println(toString(i, c));
             System.out.printf(

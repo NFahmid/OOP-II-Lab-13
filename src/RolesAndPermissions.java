@@ -28,7 +28,7 @@ public class RolesAndPermissions extends User {
      */
     public String isPassengerRegistered(String email, String password) {
         String isFound = "0";
-        for (Customer c : Customer.customerCollection) {
+        for (Customer c : Customer.getCustomers()) {
             if (email.equals(c.getEmail())) {
                 if (password.equals(c.getPassword())) {
                     isFound = "1-" + c.getUserID();
