@@ -195,17 +195,8 @@ public class Customer {
      *                   data.
      */
     public void displayCustomersData(boolean showHeader) {
-        displayHeader();
-        Iterator<Customer> iterator = customerCollection.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            i++;
-            Customer c = iterator.next();
-            System.out.println(c.toString(i));
-            System.out.printf(
-                    "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
-                    "");
-        }
+        CustomerDisplay display = new CustomerDisplay();
+        display.displayCustomersData(showHeader, this);
     }
 
     /**

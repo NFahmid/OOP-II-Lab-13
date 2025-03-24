@@ -9,11 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class FlightReservation implements DisplayClass {
+public class FlightReservation {
 
     //        ************************************************************ Fields ************************************************************
     Flight flight = new Flight();
     int flightIndexInFlightList;
+    private FlightDisplay flightDisplay;
 
     //        ************************************************************ Behaviours/Methods ************************************************************
 
@@ -156,22 +157,12 @@ public class FlightReservation implements DisplayClass {
         return String.format("| %-5d| %-41s | %-9s | \t%-9d | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  | %-10s |", serialNum, flights.getFlightSchedule(), flights.getFlightNumber(), customer.numOfTicketsBookedByUser.get(serialNum - 1), flights.getFromWhichCity(), flights.getToWhichCity(), flights.fetchArrivalTime(), flights.getFlightTime(), flights.getGate(), flightStatus(flights));
     }
 
-    @Override
+    public FlightReservation() {
+        this.flightDisplay = new FlightDisplay(flight);
+    }
+
     public void displayFlightsRegisteredByOneUser(String userID) {
-        System.out.println();
-        System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
-        System.out.printf("| Num  | FLIGHT SCHEDULE\t\t\t   | FLIGHT NO |  Booked Tickets  | \tFROM ====>>       | \t====>> TO\t   | \t    ARRIVAL TIME       | FLIGHT TIME |  GATE  |  FLIGHT STATUS  |%n");
-        System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
-        for (Customer customer : Customer.customerCollection) {
-            List<Flight> f = customer.getFlightsRegisteredByUser();
-            int size = customer.getFlightsRegisteredByUser().size();
-            if (userID.equals(customer.getUserID())) {
-                for (int i = 0; i < size; i++) {
-                    System.out.println(toString((i + 1), f.get(i), customer));
-                    System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
-                }
-            }
-        }
+        flightDisplay.displayFlightsRegisteredByOneUser(userID);
     }
 
     /*overloaded toString() method for displaying all users in a flight....*/
@@ -181,29 +172,12 @@ public class FlightReservation implements DisplayClass {
                 customer.getAge(), customer.getEmail(), customer.getAddress(), customer.getPhone(), customer.numOfTicketsBookedByUser.get(index));
     }
 
-    @Override
     public void displayHeaderForUsers(Flight flight, List<Customer> c) {
-        System.out.printf("\n%65s Displaying Registered Customers for Flight No. \"%-6s\" %s \n\n", "+++++++++++++", flight.getFlightNumber(), "+++++++++++++");
-        System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
-        System.out.printf("%10s| SerialNum  |   UserID   | Passenger Names                  | Age     | EmailID\t\t       | Home Address\t\t\t     | Phone Number\t       | Booked Tickets |%n", "");
-        System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
-        int size = flight.getListOfRegisteredCustomersInAFlight().size();
-        for (int i = 0; i < size; i++) {
-            System.out.println(toString(i, c.get(i), flightIndex(c.get(i).flightsRegisteredByUser, flight)));
-            System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
-        }
+        flightDisplay.displayHeaderForUsers(flight, c);
     }
 
-    @Override
     public void displayRegisteredUsersForAllFlight() {
-        System.out.println();
-        for (Flight flight : flight.getFlightList()) {
-            List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
-            int size = flight.getListOfRegisteredCustomersInAFlight().size();
-            if (size != 0) {
-                displayHeaderForUsers(flight, c);
-            }
-        }
+        flightDisplay.displayRegisteredUsersForAllFlight();
     }
 
     int flightIndex(List<Flight> flightList, Flight flight) {
@@ -216,15 +190,8 @@ public class FlightReservation implements DisplayClass {
         return i;
     }
 
-    @Override
     public void displayRegisteredUsersForASpecificFlight(String flightNum) {
-        System.out.println();
-        for (Flight flight : flight.getFlightList()) {
-            List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
-            if (flight.getFlightNumber().equalsIgnoreCase(flightNum)) {
-                displayHeaderForUsers(flight, c);
-            }
-        }
+        flightDisplay.displayRegisteredUsersForASpecificFlight(flightNum);
     }
 
 
