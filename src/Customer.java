@@ -5,12 +5,10 @@ public class Customer {
     // ************************************************************ Fields
     // ************************************************************
     private final String userID;
-    private String email;
     private String name;
-    private String phone;
     private final String password;
-    private String address;
     private int age;
+    private ContactInfo contactInfo;
     private List<Flight> flightsRegisteredByUser;
     private List<Integer> numOfTicketsBookedByUser;
     private static final List<Customer> customerCollection = User.getCustomersCollection();
@@ -46,11 +44,9 @@ public class Customer {
     Customer() {
         this.userID = null;
         this.name = null;
-        this.email = null;
         this.password = null;
-        this.phone = null;
-        this.address = null;
         this.age = 0;
+        this.contactInfo = null;
     }
 
     /**
@@ -69,11 +65,9 @@ public class Customer {
         random.randomIDGen();
         this.name = name;
         this.userID = random.getRandomNumber();
-        this.email = email;
         this.password = password;
-        this.phone = phone;
-        this.address = address;
         this.age = age;
+        this.contactInfo = new ContactInfo(email, phone, address);
         this.flightsRegisteredByUser = new ArrayList<>();
         this.numOfTicketsBookedByUser = new ArrayList<>();
     }
@@ -119,7 +113,7 @@ public class Customer {
      */
     private String toString(int i) {
         return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i,
-                randomIDDisplay(userID), name, age, email, address, phone);
+                randomIDDisplay(userID), name, age, contactInfo.getEmail(), contactInfo.getAddress(), contactInfo.getPhone());
     }
 
     /**
@@ -300,15 +294,15 @@ public class Customer {
     }
 
     public String getPhone() {
-        return phone;
+        return contactInfo.getPhone();
     }
 
     public String getAddress() {
-        return address;
+        return contactInfo.getAddress();
     }
 
     public String getEmail() {
-        return email;
+        return contactInfo.getEmail();
     }
 
     public int getAge() {
@@ -340,15 +334,15 @@ public class Customer {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.contactInfo.setEmail(email);
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.contactInfo.setPhone(phone);
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.contactInfo.setAddress(address);
     }
 
     public void setAge(int age) {
